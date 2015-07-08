@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/chat_row_lin"
+    android:layout_margin="20dp"
+    android:gravity="left"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <TextView
+        android:id="@+id/person_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chatting"
+        android:textSize="14sp"
+        android:textStyle="normal" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/sent_or_received"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:textColor="@android:color/tertiary_text_light"
+        android:text="Received" >
+    </TextView>
+
+</LinearLayout>
