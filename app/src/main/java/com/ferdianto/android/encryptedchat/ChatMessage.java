@@ -2,6 +2,7 @@ package com.ferdianto.android.encryptedchat;
 
 /**
  * Created by ferdhie on 14-04-2015.
+ * Represent one chat message
  */
 public class ChatMessage {
 

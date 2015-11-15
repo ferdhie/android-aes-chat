@@ -67,70 +67,70 @@ public class Utility {
         return contacts;
 
     }
-
-    public static SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences(((ActionBarActivity) context).getClass().getSimpleName(), Context.MODE_PRIVATE);
-    }
-
-    public static void savePreferences(Context context, String key, String value) {
-        final SharedPreferences prefs = getPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, value);
-        editor.commit();
-    }
-
-    public static String getFromPreferences(Context context, String key) {
-        final SharedPreferences prefs = getPreferences(context);
-        String value = prefs.getString(key, "");
-        if (value.isEmpty()) {
-            return "";
-        }
-        return value;
-    }
-
-    public static SecretKey getSecretKey(String strKey) throws Exception {
-        final int AES_KEY_SIZE = 128;
-        byte[] secret;
-        try {
-            secret = strKey.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            secret = strKey.getBytes();
-        }
-
-        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-        byte[] bkey = Arrays.copyOf(sha256.digest(secret), AES_KEY_SIZE / Byte.SIZE);
-        SecretKey key = new SecretKeySpec(bkey, "AES");
-        return key;
-    }
-
-    public static byte[] encrypt(SecretKey key, byte[] plain) throws Exception {
-        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        byte[] iv = new SecureRandom().generateSeed(16);
-        IvParameterSpec ivSpec = new IvParameterSpec(iv);
-        c.init(Cipher.ENCRYPT_MODE, key, ivSpec);
-        byte[] encrypted =c.doFinal(plain);
-
-        //add iv into the message
-        byte[] encrypted_with_iv = new byte[ encrypted.length+16 ];
-        System.arraycopy(iv, 0, encrypted_with_iv, 0, iv.length);
-        System.arraycopy(encrypted, 0, encrypted_with_iv, 16, encrypted.length);
-
-        return encrypted_with_iv;
-    }
-
-    public static byte[] decrypt(SecretKey key, byte[] encrypted) throws Exception {
-        byte[] iv = new byte[16];
-        System.arraycopy(encrypted, 0, iv, 0, iv.length);
-
-        byte[] msg = new byte[encrypted.length-16];
-        System.arraycopy(encrypted, 16, msg, 0, msg.length);
-
-        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        IvParameterSpec ivSpec = new IvParameterSpec(iv);
-        c.init(Cipher.DECRYPT_MODE, key, ivSpec);
-        byte[] plain = c.doFinal(msg);
-        return plain;
-    }
-
-
+//
+//    public static SharedPreferences getPreferences(Context context) {
+//        return context.getSharedPreferences(((ActionBarActivity) context).getClass().getSimpleName(), Context.MODE_PRIVATE);
+//    }
+//
+//    public static void savePreferences(Context context, String key, String value) {
+//        final SharedPreferences prefs = getPreferences(context);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putString(key, value);
+//        editor.commit();
+//    }
+//
+//    public static String getFromPreferences(Context context, String key) {
+//        final SharedPreferences prefs = getPreferences(context);
+//        String value = prefs.getString(key, "");
+//        if (value.isEmpty()) {
+//            return "";
+//        }
+//        return value;
+//    }
+//
+//    public static SecretKey getSecretKey(String strKey) throws Exception {
+//        final int AES_KEY_SIZE = 128;
+//        byte[] secret;
+//        try {
+//            secret = strKey.getBytes("UTF-8");
+//        } catch (UnsupportedEncodingException ex) {
+//            secret = strKey.getBytes();
+//        }
+//
+//        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+//        byte[] bkey = Arrays.copyOf(sha256.digest(secret), AES_KEY_SIZE / Byte.SIZE);
+//        SecretKey key = new SecretKeySpec(bkey, "AES");
+//        return key;
+//    }
+//
+//    public static byte[] encrypt(SecretKey key, byte[] plain) throws Exception {
+//        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+//        byte[] iv = new SecureRandom().generateSeed(16);
+//        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+//        c.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+//        byte[] encrypted =c.doFinal(plain);
+//
+//        //add iv into the message
+//        byte[] encrypted_with_iv = new byte[ encrypted.length+16 ];
+//        System.arraycopy(iv, 0, encrypted_with_iv, 0, iv.length);
+//        System.arraycopy(encrypted, 0, encrypted_with_iv, 16, encrypted.length);
+//
+//        return encrypted_with_iv;
+//    }
+//
+//    public static byte[] decrypt(SecretKey key, byte[] encrypted) throws Exception {
+//        byte[] iv = new byte[16];
+//        System.arraycopy(encrypted, 0, iv, 0, iv.length);
+//
+//        byte[] msg = new byte[encrypted.length-16];
+//        System.arraycopy(encrypted, 16, msg, 0, msg.length);
+//
+//        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+//        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+//        c.init(Cipher.DECRYPT_MODE, key, ivSpec);
+//        byte[] plain = c.doFinal(msg);
+//        return plain;
+//    }
+//
+//
 }

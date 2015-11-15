@@ -31,6 +31,7 @@ public class ChatService extends Service {
     String server;
     String secret;
     Socket socket;
+    boolean isEncrypted;
     IncomingMessageListener incomingMessageListener;
     SecretKey secretKey;
     Receiver receiver;
@@ -46,7 +47,9 @@ public class ChatService extends Service {
     }
 
     public void registerListener(IncomingMessageListener l) {
-        this.listeners.add(l);
+        //ensure 1 listeners
+        if ( !listeners.contains(l) )
+            listeners.add(l);
     }
 
     public void unregisterListener(IncomingMessageListener l) {
@@ -81,12 +84,13 @@ public class ChatService extends Service {
         }
     }
 
-    public void connect(String user, String pass, String server, String secret) throws Exception {
+    public void connect(String user, String pass, String server, String secret, boolean isEncrypted) throws Exception {
         this.user=user;
         this.pass=pass;
         this.secret=secret;
         this.server=server;
         this.secretKey = getSecretKey(secret);
+        this.isEncrypted=isEncrypted;
 
         connected=false;
         loggedin=false;
@@ -117,13 +121,28 @@ public class ChatService extends Service {
 
     private String receive(String line) throws Exception {
         byte[] decoded = Base64.decode(line.getBytes(), Base64.NO_WRAP);
-        byte[] plainText = decrypt(secretKey, decoded);
+        byte[] plainText = null;
+
+        if (this.isEncrypted) {
+            plainText = decrypt(secretKey, decoded);
+        } else {
+            plainText = decoded;
+        }
+
         String incomingMessage = new String(plainText);
         return incomingMessage;
     }
 
     public void send(String line) throws Exception {
-        byte[] encrypted = encrypt(secretKey, line.getBytes());
+
+
+        byte[] encrypted = null;
+        if (this.isEncrypted) {
+            encrypted = encrypt(secretKey, line.getBytes());
+        } else {
+            encrypted = line.getBytes();
+        }
+
         byte[] encoded = Base64.encode(encrypted, Base64.NO_WRAP);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

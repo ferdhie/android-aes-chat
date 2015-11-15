@@ -179,8 +179,8 @@ public class ListPeople extends ActionBarActivity implements LoginFragment.Login
     }
 
     @Override
-    public void login(String username, String password, String server, String secret) throws Exception {
-        chatService.connect(username, password, server, secret);
+    public void login(String username, String password, String server, String secret, boolean isEncrypted) throws Exception {
+        chatService.connect(username, password, server, secret, isEncrypted);
     }
 
     @Override

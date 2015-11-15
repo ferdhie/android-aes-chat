@@ -32,7 +32,8 @@
             android:layout_weight="1"
             android:background="@drawable/edt_default"
             android:hint="@string/type_your_message_here_"
-            android:inputType="text" >
+            android:inputType="text"
+            android:maxLength="256">
         </EditText>
 
         <Button

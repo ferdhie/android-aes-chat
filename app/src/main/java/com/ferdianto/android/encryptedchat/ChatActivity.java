@@ -76,6 +76,12 @@ public class ChatActivity extends ActionBarActivity implements ChatService.Incom
 
     protected void sendChat() {
         String text = message.getText().toString().trim();
+
+        if (text.length()>=256) {
+            Toast.makeText(this, "Pesan terlalu panjang, panjang maksimal 256 char", Toast.LENGTH_LONG);
+            return;
+        }
+
         Log.i("ChatActivity", "sending chat to " + to + "; " + text);
 
         if (text.length()>0) {
