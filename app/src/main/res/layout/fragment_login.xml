@@ -66,9 +66,18 @@
             android:layout_marginTop="4dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="4dp"
             android:fontFamily="sans-serif"
             android:hint="Server secret"/>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Server Use Encryption"
+            android:id="@+id/chkEncrypted"
+            android:enabled="true"
+            android:checked="true" />
 
         <Button
             android:layout_width="wrap_content"

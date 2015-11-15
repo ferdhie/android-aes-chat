@@ -11,11 +11,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 
 /**
  * Login fragment
+ * Handle layout when user not logged in
  */
 public class LoginFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +33,7 @@ public class LoginFragment extends Fragment {
     EditText pwText;
     EditText serverText;
     EditText secretText;
+    CheckBox isEncrypted;
 
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
@@ -97,6 +100,7 @@ public class LoginFragment extends Fragment {
         String password = pwText.getText().toString().trim();
         String server = serverText.getText().toString().trim();
         String secret = secretText.getText().toString().trim();
+        final boolean encrypted = isEncrypted.isChecked();
 
         if (username.length() == 0 || password.length() == 0 || server.length()==0 || secret.length()==0) {
             msgbox("Error", "Username, password, server dan secret tidak boleh kosong");
@@ -110,9 +114,10 @@ public class LoginFragment extends Fragment {
                 String password = params[1];
                 String server = params[2];
                 String secret = params[3];
+                boolean isEncrypted = params[4].equals("true");
 
                 try {
-                    mListener.login(username,password,server,secret);
+                    mListener.login(username,password,server,secret,isEncrypted);
                     return true;
                 } catch (Exception e) {
                     return e;
@@ -134,7 +139,7 @@ public class LoginFragment extends Fragment {
                     mListener.loginSuccess();
                 }
             }
-        }.execute(username, password, server, secret);
+        }.execute(username, password, server, secret, encrypted?"true":"false");
     }
 
     @Override
@@ -153,8 +158,12 @@ public class LoginFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * This is the listener when user clock login and when the login has success,
+     * this will be called from ListPeople fragment
+     */
     public interface LoginFragmentListener {
-        public void login(String username, String password, String server, String secret) throws Exception;
+        public void login(String username, String password, String server, String secret, boolean isEncrypted) throws Exception;
         public void loginSuccess();
     }
 

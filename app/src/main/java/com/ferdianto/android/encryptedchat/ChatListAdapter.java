@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ferdhie on 14-04-2015.
+ * Adapter list for chat, incoming or outgoing
  */
 public class ChatListAdapter extends ArrayAdapter<ChatMessage> {
     private final Activity context;
